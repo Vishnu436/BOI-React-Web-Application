@@ -1,0 +1,22 @@
+.cards{
+    background-color: #CCD1D1;
+    transition: transform .6s ease;
+    font-family: "Barlow";
+    font-weight: 300;
+    font-style:'normal'
+   
+}
+
+.cards:hover{
+    transform: scale(0.95);
+}
+.cardinfo{
+    font-family: "Barlow";
+    font-weight: 600;
+    font-style:'normal'
+}
+
+.notifications{
+    background-color: #CCD1D1;
+    border-radius: 10px;
+}
