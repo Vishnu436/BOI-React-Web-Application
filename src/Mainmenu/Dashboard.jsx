@@ -17,17 +17,10 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchData = async() => {
       try {
-          const response = await API.fetchAPI('/customer/api/v1/loadPendingApplications');
- 
-        if (response.ok) {
-          const result = await response.json();
-          const responseBody = result.responseBody || []
-          setData(responseBody); 
-          console.log(responseBody)
-          setLoading(false);
-        } else {
-          console.error('Error occurred', response.status);
-        }
+           await API.fetchAPI('/customer/api/v1/loadPendingApplications' , {}).then(response => {
+            setData(response.responseBody); 
+            setLoading(false);
+          }).catch();
       } catch (error) {
         console.error('Error occurred', error);
       }
@@ -53,15 +46,10 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchCardData = async () => {
       try {
-          const response = await API.fetchAPI('/customer/api/v1/getCustomerApplications');
-        if (response.ok) {
-          const result = await response.json();
-          const responseBody = result.responseBody || [];
-          const cardData = responseBody 
-          setCardData(cardData);
-        } else {
-          console.error('Error occurred', response.status);
-        }
+          API.fetchAPI('/customer/api/v1/getCustomerApplications', {}).then(response =>{
+            setCardData(response.responseBody)
+            console.log(cardData)
+          });
       } catch (error) {
         console.error('Error occurred', error);
       } finally {
@@ -127,7 +115,7 @@ const Dashboard = () => {
       title: 'Status',
       render: (_, record) => (
         <Space size="middle">
-          <Button type={Status(record.Appli_Status)} >{  record.Appli_Status === 2 ? <Button style={{backgroundColor:'#79F1A8'}} > Approve</Button> : (record.Appli_Status === 0 ? <Button style={{backgroundColor:'#ED9B9B'}}> Reject </Button> :<Button style={{backgroundColor:'#53EEEE'}}> Pending </Button>)}
+          <Button type={Status(record.Appli_Status)} >{ record.Appli_Status === 2 ? <Button style={{backgroundColor:'#79F1A8'}}  > Approve</Button> : (record.Appli_Status === 0 ? <Button style={{backgroundColor:'#ED9B9B'}} > Reject </Button> :<Button style={{backgroundColor:'#53EEEE'}} > Pending </Button>)}
            </Button>
         </Space>
       ),
@@ -143,21 +131,18 @@ const Dashboard = () => {
         <Col span={18}>
           <Row gutter={[16,24]} >
             <Col span={8}>
-              <Card className="cards" title="" bordered={false} >
-                <Title level={2} className="cardinfo"> Approved : {cardData.Approved ? cardData.Approved : 0}  </Title>
-                <Title level={5} className="cardinfo" > </Title>
+              <Card className="cards" bordered={false} >
+                <Title level={2} className="cardinfo"> Approved : {cardData?.Approved ? cardData?.Approved : 0}  </Title>
               </Card>
             </Col>
             <Col span={8}>
-              <Card className="cards" title="" bordered={false}>
-                <Title level={2} className="cardinfo">  Rejected : {cardData.Rejected ? cardData.Rejected : 0}</Title>
-                <Title level={5} className="cardinfo"></Title>
+              <Card className="cards"  bordered={false}>
+                <Title level={2} className="cardinfo">  Rejected : {cardData?.Rejected ? cardData?.Rejected : 0} </Title>
               </Card>
             </Col>
             <Col span={8}>
-              <Card className="cards" title="" bordered={false}>
-                <Title level={2} className="cardinfo"> Pending: {cardData.Pending ? cardData.Pending : 0} </Title>
-                <Title level={5} className="cardinfo">  </Title>
+              <Card className="cards"  bordered={false}>
+                <Title level={2} className="cardinfo"> Pending: {cardData?.Pending ? cardData?.Pending : 0} </Title>       
               </Card>
             </Col>
             <Col span={24} style={{padding:'20px'}}>
