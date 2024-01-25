@@ -1,6 +1,6 @@
 // api.js
 // const BASE_URL = 'http://10.5.0.15:7575'; //Local
-const BASE_URL = 'http://203.193.148.25:7575'; // Production
+const BASE_URL = 'https://203.193.148.25:7575'; // Production
 
 const generateUrl = (endpoint, params = {}) => {
   let url = `${BASE_URL}${endpoint}`;
