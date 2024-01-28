@@ -29,7 +29,7 @@ const API = {
   fetchAPI: (url, payload, headerOptions) =>
     fetchData(url, {
       method: 'POST',
-      referrerPolicy: "unsafe_url",
+      // referrerPolicy: "unsafe_url",
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
