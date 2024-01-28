@@ -1,32 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import {
-  Button,
-  Form,
-  Input,
-  Typography,
-  Row,
-  Col,
-  Select,
-  Image,
-  Spin,
-  Space,
-  Modal,
-} from "antd";
-
+import { Button, Form, Input, Typography, Row, Col, Select, Image, Spin, Space, Modal } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
+import { RotateLeftOutlined, RotateRightOutlined, SwapOutlined, ZoomInOutlined, ZoomOutOutlined } from "@ant-design/icons";
+import API from "../utilities/api";
 import { useLocation } from "react-router-dom";
 import { useWatch } from "antd/es/form/Form";
-import API from "../utilities/api";
-
-import {
-  RotateLeftOutlined,
-  RotateRightOutlined,
-  SwapOutlined,
-  ZoomInOutlined,
-  ZoomOutOutlined,
-} from "@ant-design/icons";
-
+ 
 const Application = () => {
   const [form] = Form.useForm();
   const { state } = useLocation();
@@ -36,30 +16,41 @@ const Application = () => {
   const [reject, setreject] = useState(false);
   const [submittable, setSubmittable] = useState(false);
   const values = useWatch([], form);
-
   const navigate = useNavigate();
-  const [initialValues, setinitialValues] = useState({
-    FullName: "Sai Kumar",
-  });
-
+  const [initialValues, setinitialValues] = useState({ FullName: "Sai Kumar" });
+ 
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
     }, 300);
   }, []);
-
+ 
   useEffect(() => {
     fetchData();
   }, []);
 
+  // useEffect(() => {
+  //   form
+  //     .validateFields({
+  //       ApplicationForm: true,
+  //     })
+  //     .then(
+  //       () => {
+  //         setSubmittable(true);
+  //       },
+  //       () => {
+  //         setSubmittable(false);
+  //       }
+  //     );
+  // }, [values]);
+ 
   const fetchData = async () => {
     try {
       const obj = {
         Cus_Appli_Id: state.record.Cus_Appli_Id,
         Appli_Status: state.record.Appli_Status,
       };
-
-       API.fetchAPI("/customer/api/v1/loadApplication", obj)
+      API.fetchAPI("/customer/api/v1/loadApplication", obj)
         .then((response) => {
           setData(response.responseBody);
           const responseBody = response.responseBody;
@@ -71,8 +62,8 @@ const Application = () => {
             Cus_Marital_Status:
               responseBody.CustomerPersonalDetails.Cus_Marital_Status,
             Cus_PostalCode: responseBody.CustomerPersonalDetails.Cus_PostalCode,
-            Cus_Address_LandMark:
-              responseBody.CustomerPersonalDetails.Cus_Address_LandMark,
+            Cus_Address_LandMark: responseBody.CustomerPersonalDetails.Cus_Address_LandMark != null ?
+              responseBody.CustomerPersonalDetails.Cus_Address_LandMark : "NA",
             Cus_Address: responseBody.CustomerPersonalDetails.Cus_Address,
             Cus_State: responseBody.CustomerPersonalDetails.Cus_State,
             Occupation: responseBody.CustomerPersonalDetails.Occupation,
@@ -80,8 +71,8 @@ const Application = () => {
             Cus_Preferred_Language:
               responseBody.CustomerPersonalDetails.Cus_Preferred_Language,
             DOB: responseBody.CustomerPersonalDetails.DOB,
-            Emergency_Contact:
-              responseBody.CustomerPersonalDetails.Emergency_Contact,
+            Emergency_Contact: responseBody.CustomerPersonalDetails.Emergency_Contact != null ?
+              responseBody.CustomerPersonalDetails.Emergency_Contact : "NA",
             Nationality: responseBody.CustomerPersonalDetails.Nationality,
             Cus_Address_Proof: responseBody.CustomerKYCDetails.Cus_Address_Proof,
             Cus_Id_Proof: responseBody.CustomerKYCDetails.Cus_Id_Proof,
@@ -116,23 +107,37 @@ const Application = () => {
       console.error("Error occurred", error);
     }
   };
-
-  useEffect(() => {
-    form
-      .validateFields({
-        ApplicationForm: true,
-      })
-      .then(
-        () => {
-          setSubmittable(true);
-        },
-        () => {
-          setSubmittable(false);
-        }
-      );
-  }, [values]);
-
  
+  const SubmitForm = async (key) => {
+    try {
+      const obj = {
+        Cus_Appli_Id: state.record.Cus_Appli_Id,
+        Appli_Status: key === "Approve" ? 2 : 0,
+        Is_Customer: key === "Approve" ? true : false,
+        Approved_By: "lallikrishna@gmail.com",
+        remarks: values.remarks,
+      };
+ 
+      // Form validation before submitting
+      if(key ==='approve'){
+        await form.validateFields({ ApplicationForm: false });
+      }
+ 
+      API.fetchAPI("/customer/api/v1/updateApplicationStatus", obj)
+        .then((response) => {
+          console.log(response);
+        });
+ 
+      if (key === "Reject") {
+        setreject(true);
+      } else {
+        setapprove(true);
+      }
+    } catch (error) {
+      console.error("Error occurred", error);
+    }
+  };
+
 
   if (isLoading) {
     return (
@@ -152,36 +157,19 @@ const Application = () => {
       </>
     );
   }
-
+ 
   const layout = {
     labelCol: { span: 24 },
     wrapperCol: { span: 24 },
   };
+
+  // const onFinish = (values) => {
+  //   // fetchDataValidation(values);
+  // };
+ 
   const { Option } = Select;
-
-  const onFinish = (values) => {
-    // fetchDataValidation(values);
-  };
-
-  async function SubmitForm(key) {
-    try {
-      const obj = {
-        Cus_Appli_Id: state.record.Cus_Appli_Id,
-        Appli_Status: key === "Approve" ? 2 : 0,
-        Is_Customer: key === "Approve" ? true : false,
-        Approved_By: "lallikrishna@gmail.com",
-        remarks: values.remarks,
-      };
-      API.fetchAPI(
-        "/customer/api/v1/updateApplicationStatus",
-        obj
-      ).then(response =>{console.log(response)});
-    } catch (error) {
-      console.error("Error occurred", error);
-    }
-  }
   const { Title } = Typography;
-
+ 
   const FormFields = [
     {
       label: "Personal Details",
@@ -249,8 +237,7 @@ const Application = () => {
           required: true,
           message: "Please input your Country name!",
         },
-        {
-        
+        { 
           message: "Only alphabets were allowed in Country name",
         },
       ],
@@ -570,7 +557,7 @@ const Application = () => {
       type: "heading",
     },
   ];
-
+ 
   return (
     <>
       <Title
@@ -581,7 +568,7 @@ const Application = () => {
       <Form
         {...layout}
         name="ApplicationForm"
-        onFinish={onFinish}
+        // onFinish={onFinish}
         style={{ marginTop: "50px" }}
         ref={data}
         form={form}
@@ -818,6 +805,7 @@ const Application = () => {
               )}
             </Form.Item>
           </Col>
+
           <Col span={24}>
             <Form.Item
               label={"Remarks"}
@@ -873,7 +861,7 @@ const Application = () => {
                 <Button
                   type="primary"
                   htmlType="button"
-                  style={{ backgroundColor: "#7149C6" }}
+                  style={{ backgroundColor: "#7149C6", color:'#fff'}}
                   disabled={!submittable}
                   onClick={() => [SubmitForm("Approve"), setapprove(true)]}
                 >
@@ -898,5 +886,5 @@ const Application = () => {
     </>
   );
 };
-
+ 
 export default Application;
