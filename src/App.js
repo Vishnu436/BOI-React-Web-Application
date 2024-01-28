@@ -4,11 +4,11 @@ import Login from "./pages/Login.jsx";
 import Layout from "./pages/Layout.jsx";
 import Applications from "./Mainmenu/Applications.jsx";
 import Dashboard from "./Mainmenu/Dashboard.jsx";
-import HttpsRedirect from 'react-https-redirect';
+
 
 function App() {
   return (
-    <HttpsRedirect>
+ 
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Login />} />
@@ -18,7 +18,7 @@ function App() {
           </Route>
         </Routes>
       </BrowserRouter>
-    </HttpsRedirect>
+
   )
 }
 
