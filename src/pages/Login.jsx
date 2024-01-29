@@ -37,6 +37,8 @@ const Login = () => {
       Cus_Mobile_Number: parseInt(values.Cus_Mobile_Number),
     };
 
+  
+
     try {
       await API.fetchAPI("/usrmngmt/api/v1/getIsCustomer", obj)
         .then((response) => {
@@ -45,11 +47,11 @@ const Login = () => {
               User: response.responseBody.User,
               userName: values.Cus_EmailID,
               password: parseInt(values.Cus_Mobile_Number),
-            };
+            };    
 
             API.fetchAPI("/usrmngmt/api/v1/validateAndLogin", loginObj)
               .then((response) => {
-                if (response.responseBody.Validation ) {
+                if (response.responseBody.Validation) {
                   navigate("./main/dashboard");
                 } else {
                   openNotification();
