@@ -1,59 +1,62 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Button, Form, Input, Typography, Row, Col, Select, Image, Spin, Space, Modal } from "antd";
+import {
+  Button,
+  Form,
+  Input,
+  Typography,
+  Row,
+  Col,
+  Select,
+  Image,
+  Spin,
+  Space,
+  Modal,
+} from "antd";
+
 import { LoadingOutlined } from "@ant-design/icons";
-import { RotateLeftOutlined, RotateRightOutlined, SwapOutlined, ZoomInOutlined, ZoomOutOutlined } from "@ant-design/icons";
-import API from "../utilities/api";
 import { useLocation } from "react-router-dom";
 import { useWatch } from "antd/es/form/Form";
- 
+import API from "../utilities/api";
+
+import {
+  RotateLeftOutlined,
+  RotateRightOutlined,
+  SwapOutlined,
+  ZoomInOutlined,
+  ZoomOutOutlined,
+} from "@ant-design/icons";
+
 const Application = () => {
   const [form] = Form.useForm();
   const { state } = useLocation();
   const [isLoading, setLoading] = useState(true);
-  const [data, setData] = useState([]);
   const [approve, setapprove] = useState(false);
   const [reject, setreject] = useState(false);
   const [submittable, setSubmittable] = useState(false);
   const values = useWatch([], form);
+
   const navigate = useNavigate();
-  const [initialValues, setinitialValues] = useState({ FullName: "Sai Kumar" });
- 
-  useEffect(() => {
-    setTimeout(() => {
-      setLoading(false);
-    }, 300);
-  }, []);
- 
+  const [initialValues, setinitialValues] = useState({});
+
+
   useEffect(() => {
     fetchData();
   }, []);
 
-  // useEffect(() => {
-  //   form
-  //     .validateFields({
-  //       ApplicationForm: true,
-  //     })
-  //     .then(
-  //       () => {
-  //         setSubmittable(true);
-  //       },
-  //       () => {
-  //         setSubmittable(false);
-  //       }
-  //     );
-  // }, [values]);
- 
   const fetchData = async () => {
     try {
       const obj = {
         Cus_Appli_Id: state.record.Cus_Appli_Id,
         Appli_Status: state.record.Appli_Status,
       };
-      API.fetchAPI("/customer/api/v1/loadApplication", obj)
+
+       API.fetchAPI("/customer/api/v1/loadApplication", obj)
         .then((response) => {
-          setData(response.responseBody);
+          // setData(response.responseBody);
+          setLoading(false);
           const responseBody = response.responseBody;
+          console.log(responseBody);
           setinitialValues({
             FullName: responseBody.CustomerPersonalDetails.FullName,
             Gender: responseBody.CustomerPersonalDetails.Gender,
@@ -62,8 +65,8 @@ const Application = () => {
             Cus_Marital_Status:
               responseBody.CustomerPersonalDetails.Cus_Marital_Status,
             Cus_PostalCode: responseBody.CustomerPersonalDetails.Cus_PostalCode,
-            Cus_Address_LandMark: responseBody.CustomerPersonalDetails.Cus_Address_LandMark != null ?
-              responseBody.CustomerPersonalDetails.Cus_Address_LandMark : "NA",
+            Cus_Address_LandMark:
+              responseBody.CustomerPersonalDetails.Cus_Address_LandMark,
             Cus_Address: responseBody.CustomerPersonalDetails.Cus_Address,
             Cus_State: responseBody.CustomerPersonalDetails.Cus_State,
             Occupation: responseBody.CustomerPersonalDetails.Occupation,
@@ -71,8 +74,8 @@ const Application = () => {
             Cus_Preferred_Language:
               responseBody.CustomerPersonalDetails.Cus_Preferred_Language,
             DOB: responseBody.CustomerPersonalDetails.DOB,
-            Emergency_Contact: responseBody.CustomerPersonalDetails.Emergency_Contact != null ?
-              responseBody.CustomerPersonalDetails.Emergency_Contact : "NA",
+            Emergency_Contact:
+              responseBody.CustomerPersonalDetails.Emergency_Contact,
             Nationality: responseBody.CustomerPersonalDetails.Nationality,
             Cus_Address_Proof: responseBody.CustomerKYCDetails.Cus_Address_Proof,
             Cus_Id_Proof: responseBody.CustomerKYCDetails.Cus_Id_Proof,
@@ -101,43 +104,32 @@ const Application = () => {
             Cus_Photo_Proof: responseBody.CustomerKYCDetails.Cus_Photo_Proof,
             Cus_Signature: responseBody.CustomerKYCDetails.Cus_Signature,
           });
+          
         })
         .catch();
     } catch (error) {
       console.error("Error occurred", error);
     }
   };
- 
-  const SubmitForm = async (key) => {
-    try {
-      const obj = {
-        Cus_Appli_Id: state.record.Cus_Appli_Id,
-        Appli_Status: key === "Approve" ? 2 : 0,
-        Is_Customer: key === "Approve" ? true : false,
-        Approved_By: "lallikrishna@gmail.com",
-        remarks: values.remarks,
-      };
- 
-      // Form validation before submitting
-      if(key ==='approve'){
-        await form.validateFields({ ApplicationForm: false });
-      }
- 
-      API.fetchAPI("/customer/api/v1/updateApplicationStatus", obj)
-        .then((response) => {
-          console.log(response);
-        });
- 
-      if (key === "Reject") {
-        setreject(true);
-      } else {
-        setapprove(true);
-      }
-    } catch (error) {
-      console.error("Error occurred", error);
-    }
-  };
 
+ 
+
+  useEffect(() => {
+    form
+      .validateFields({
+        ApplicationForm: true,
+      })
+      .then(
+        () => {
+          setSubmittable(true);
+        },
+        () => {
+          setSubmittable(false);
+        }
+      );
+  }, [values]);
+
+ 
 
   if (isLoading) {
     return (
@@ -157,19 +149,36 @@ const Application = () => {
       </>
     );
   }
- 
+
   const layout = {
     labelCol: { span: 24 },
     wrapperCol: { span: 24 },
   };
-
-  // const onFinish = (values) => {
-  //   // fetchDataValidation(values);
-  // };
- 
   const { Option } = Select;
+
+  const onFinish = (values) => {
+    // fetchDataValidation(values);
+  };
+
+  async function SubmitForm(key) {
+    try {
+      const obj = {
+        Cus_Appli_Id: state.record.Cus_Appli_Id,
+        Appli_Status: key === "Approve" ? 2 : 0,
+        Is_Customer: key === "Approve" ? true : false,
+        Approved_By: 'saikumar@admin.com',
+        remarks: values.remarks,
+      };
+      API.fetchAPI(
+        "/customer/api/v1/updateApplicationStatus",
+        obj
+      ).then(response =>{console.log(response)});
+    } catch (error) {
+      console.error("Error occurred", error);
+    }
+  }
   const { Title } = Typography;
- 
+
   const FormFields = [
     {
       label: "Personal Details",
@@ -183,11 +192,7 @@ const Application = () => {
         {
           required: true,
           message: "Please input your Full Name!",
-        },
-        {
-          pattern: /^[a-zA-Z]+$/,
-          message: "Numbers aren't allowed in Full Name",
-        },
+        }
       ],
       placeholder: "Enter Your Full Name",
       disabled: true,
@@ -237,7 +242,8 @@ const Application = () => {
           required: true,
           message: "Please input your Country name!",
         },
-        { 
+        {
+        
           message: "Only alphabets were allowed in Country name",
         },
       ],
@@ -339,20 +345,7 @@ const Application = () => {
       disabled: true,
       type: "text",
     },
-    // {
-    //   label: "Preferred Language",
-    //   name: "Cus_Preferred_Language",
-    //   rules: [
-    //     {
-    //       required: true,
-    //       message: "Please Enter Your Language!",
-    //     },
-    //   ],
-    //   placeholder: "Enter Your Language",
-    //   disabled: true,
-    //   type: "text",
-    // },
-
+    
     {
       label: "Date of Birth",
       name: "DOB",
@@ -397,19 +390,7 @@ const Application = () => {
       disabled: true,
       type: "text",
     },
-    // {
-    //   label: "Initial Deposit Amount",
-    //   name: "Cust_Initial_Deposit_Amount",
-    //   rules: [
-    //     {
-    //       required: true,
-    //       message: "Enter your deposit Amount!",
-    //     },
-    //   ],
-    //   placeholder: "Enter your deposit Amount",
-    //   disabled: true,
-    //   type: "text",
-    // },
+
     {
       label: "Nominee Details",
       name: "Cust_Nominee_Details",
@@ -557,7 +538,7 @@ const Application = () => {
       type: "heading",
     },
   ];
- 
+
   return (
     <>
       <Title
@@ -568,9 +549,9 @@ const Application = () => {
       <Form
         {...layout}
         name="ApplicationForm"
-        // onFinish={onFinish}
+        onFinish={onFinish}
         style={{ marginTop: "50px" }}
-        ref={data}
+        // ref={data}
         form={form}
         initialValues={initialValues}
       >
@@ -805,7 +786,6 @@ const Application = () => {
               )}
             </Form.Item>
           </Col>
-
           <Col span={24}>
             <Form.Item
               label={"Remarks"}
@@ -830,55 +810,62 @@ const Application = () => {
           </Col>
 
           <Col span={24}>
-            <Form.Item
-              wrapperCol={{ ...layout.wrapperCol, offset: 15 }}
-              style={{ marginTop: "40px", textAlign: "end" }}
-            >
-              <Space size={30}>
+            <Form.Item>
+              <div style={{display:'flex', justifyContent:'space-between'}}>
                 <Button
-                  type="primary"
-                  htmlType="button"
-                  style={{ background: "red" }}
-                  onClick={() => [SubmitForm("Reject"), setreject(true)]}
-                >
-                  Reject
-                </Button>
-                <Modal
-                  title="Rejected"
-                  centered
-                  open={reject}
-                  onOk={() => {
-                    navigate("/main/dashboard");
-                  }}
-                  onCancel={() => setreject(false)}
-                >
-                  <p>
-                    {" "}
-                    Form is rejected, Please check the details and submit again{" "}
-                  </p>
-                </Modal>
+                    type="primary"
+                    htmlType="button"
+                    style={{ background: "blue" }}
+                    onClick={() =>{navigate("/main/dashboard")}}
+                    > Back 
+                 </Button>
 
-                <Button
-                  type="primary"
-                  htmlType="button"
-                  style={{ backgroundColor: "#7149C6", color:'#fff'}}
-                  disabled={!submittable}
-                  onClick={() => [SubmitForm("Approve"), setapprove(true)]}
-                >
-                  Approve
-                </Button>
-                <Modal
-                  title="Approved"
-                  centered
-                  open={approve}
-                  onOk={() => {
-                    navigate("/main/dashboard");
-                  }}
-                  onCancel={() => setapprove(false)}
-                >
-                  <p> Form is Approved, Please navigate to Dashboard </p>
-                </Modal>
-              </Space>
+                  <Space size={30}>
+                    <Button
+                      type="primary"
+                      htmlType="button"
+                      style={{ background: "red" }}
+                      onClick={() => [SubmitForm("Reject"), setreject(true)]}
+                    >
+                      Reject
+                    </Button>
+                    <Modal
+                      title="Rejected"
+                      centered
+                      open={reject}
+                      onOk={() => {
+                        navigate("/main/dashboard");
+                      }}
+                      onCancel={() => setreject(false)}
+                    >
+                      <p>
+                        {" "}
+                        Form is rejected, Please check the details and submit again{" "}
+                      </p>
+                    </Modal>
+
+                    <Button
+                      type="primary"
+                      htmlType="button"
+                      style={{ backgroundColor: "#7149C6" }}
+                      disabled={!submittable}
+                      onClick={() => [SubmitForm("Approve"), setapprove(true)]}
+                    >
+                      Approve
+                    </Button>
+                    <Modal
+                      title="Approved"
+                      centered
+                      open={approve}
+                      onOk={() => {
+                        navigate("/main/dashboard");
+                      }}
+                      onCancel={() => setapprove(false)}
+                    >
+                      <p> Form is Approved, Please navigate to Dashboard </p>
+                    </Modal>
+                  </Space>
+                </div>
             </Form.Item>
           </Col>
         </Row>
@@ -886,5 +873,5 @@ const Application = () => {
     </>
   );
 };
- 
+
 export default Application;
