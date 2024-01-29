@@ -49,7 +49,7 @@ const Login = () => {
 
             API.fetchAPI("/usrmngmt/api/v1/validateAndLogin", loginObj)
               .then((response) => {
-                if (response.responseHeader.code === 200) {
+                if (response.responseBody.Validation ) {
                   navigate("./main/dashboard");
                 } else {
                   openNotification();
