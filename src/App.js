@@ -10,6 +10,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Login />} />
+        
         <Route path="/main" element={<Layout />}>
           <Route path="/main/applications" element={<Applications />} />
           <Route path="/main/dashboard" element={<Dashboard />} />
