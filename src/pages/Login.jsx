@@ -12,7 +12,6 @@ import {
   Carousel,
   notification,
 } from "antd";
-
 import { useNavigate } from "react-router-dom";
 import API from "../utilities/api";
 
@@ -30,16 +29,12 @@ const Login = () => {
   };
 
   const onFinish = async (values) => {
-    console.log(values.Cus_EmailID);
-
-    const obj = {
-      Cus_EmailID: values.Cus_EmailID,
-      Cus_Mobile_Number: parseInt(values.Cus_Mobile_Number),
-    };
-
-  
-
+    console.log(values.Cus_EmailID, "Email ID");
     try {
+      const obj = {
+        Cus_EmailID: values.Cus_EmailID,
+        Cus_Mobile_Number: parseInt(values.Cus_Mobile_Number),
+      };
       await API.fetchAPI("/usrmngmt/api/v1/getIsCustomer", obj)
         .then((response) => {
           if (response.responseHeader.code) {
@@ -47,8 +42,7 @@ const Login = () => {
               User: response.responseBody.User,
               userName: values.Cus_EmailID,
               password: parseInt(values.Cus_Mobile_Number),
-            };    
-
+            };
             API.fetchAPI("/usrmngmt/api/v1/validateAndLogin", loginObj)
               .then((response) => {
                 if (response.responseBody.Validation) {
@@ -76,20 +70,9 @@ const Login = () => {
       <Col span={12}>
         <Form
           name="basic"
-          labelCol={{
-            span: 24,
-          }}
-          wrapperCol={{
-            span: 24,
-          }}
-          style={{
-            width: "400px",
-            marginLeft: "200px",
-            marginTop: 200,
-          }}
-          initialValues={{
-            remember: true,
-          }}
+          labelCol={{ span: 24 }}
+          wrapperCol={{ span: 24 }}
+          initialValues={{ remember: true }}
           onFinish={onFinish}
           autoComplete="off"
         >
@@ -98,8 +81,7 @@ const Login = () => {
             style={{
               display: "flex",
               justifyContent: "center",
-              marginBottom: "50px",
-              fontFamily: "Barlow",
+           
               fontWeight: 500,
               fontStyle: "normal",
             }}
@@ -110,7 +92,7 @@ const Login = () => {
             label="Username or Email"
             name="Cus_EmailID"
             style={{
-              fontFamily: "Barlow",
+              
               fontWeight: 400,
               fontStyle: "normal",
             }}
@@ -133,7 +115,7 @@ const Login = () => {
                 border: "none",
                 borderBottom: "1px solid black",
                 borderRadius: "0px",
-                fontFamily: "Barlow",
+                
                 fontWeight: 100,
                 fontStyle: "normal",
               }}
@@ -144,7 +126,7 @@ const Login = () => {
             label="Phone Number"
             name="Cus_Mobile_Number"
             style={{
-              fontFamily: "Barlow",
+              
               fontWeight: 400,
               fontStyle: "normal",
             }}
@@ -168,7 +150,7 @@ const Login = () => {
                 border: "none",
                 borderBottom: "1px solid black",
                 borderRadius: "0px",
-                fontFamily: "Barlow",
+                
                 fontWeight: 100,
                 fontStyle: "normal",
               }}
@@ -187,7 +169,7 @@ const Login = () => {
             <Space size={170}>
               <Checkbox
                 style={{
-                  fontFamily: "Barlow",
+                  
                   fontWeight: 400,
                   fontStyle: "normal",
                 }}
@@ -200,7 +182,7 @@ const Login = () => {
                   type="primary"
                   htmlType="submit"
                   style={{
-                    fontFamily: "Barlow",
+                    
                     fontWeight: 300,
                     fontStyle: "normal",
                     marginLeft: "40%",
