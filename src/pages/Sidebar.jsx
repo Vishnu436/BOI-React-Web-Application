@@ -23,7 +23,6 @@ const CustomSider = ({ selectedMenuItem, handleMenuClick }) => {
         style={{
           marginTop: "90px",
           padding: "25px",
-          fontFamily: "Barlow",
           fontWeight: 500,
           fontStyle: "normal",
         }}

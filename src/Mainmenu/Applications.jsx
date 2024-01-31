@@ -600,7 +600,7 @@ const Application = () => {
   return (
     <>
       <Title
-        style={{ fontFamily: "Barlow", fontWeight: 600, fontStyle: "normal" }}
+        style={{fontWeight: 600, fontStyle: "normal" }}
       >
         Applications
       </Title>

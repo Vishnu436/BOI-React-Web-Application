@@ -1,7 +1,6 @@
 .cards{
     background-color: #CCD1D1;
     transition: transform .6s ease;
-    font-family: "Barlow";
     font-weight: 300;
     font-style:'normal'
    
@@ -11,7 +10,6 @@
     transform: scale(0.95);
 }
 .cardinfo{
-    font-family: "Barlow";
     font-weight: 600;
     font-style:'normal'
 }

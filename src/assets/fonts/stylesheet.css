@@ -1,0 +1,91 @@
+@font-face {
+    font-family: 'Mukta';
+    src: url('Mukta-Bold.eot');
+    src: url('Mukta-Bold.eot?#iefix') format('embedded-opentype'),
+        url('Mukta-Bold.woff2') format('woff2'),
+        url('Mukta-Bold.woff') format('woff'),
+        url('Mukta-Bold.ttf') format('truetype'),
+        url('Mukta-Bold.svg#Mukta-Bold') format('svg');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Mukta';
+    src: url('Mukta-ExtraBold.eot');
+    src: url('Mukta-ExtraBold.eot?#iefix') format('embedded-opentype'),
+        url('Mukta-ExtraBold.woff2') format('woff2'),
+        url('Mukta-ExtraBold.woff') format('woff'),
+        url('Mukta-ExtraBold.ttf') format('truetype'),
+        url('Mukta-ExtraBold.svg#Mukta-ExtraBold') format('svg');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Mukta';
+    src: url('Mukta-ExtraLight.eot');
+    src: url('Mukta-ExtraLight.eot?#iefix') format('embedded-opentype'),
+        url('Mukta-ExtraLight.woff2') format('woff2'),
+        url('Mukta-ExtraLight.woff') format('woff'),
+        url('Mukta-ExtraLight.ttf') format('truetype'),
+        url('Mukta-ExtraLight.svg#Mukta-ExtraLight') format('svg');
+    font-weight: 200;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Mukta';
+    src: url('Mukta-Light.eot');
+    src: url('Mukta-Light.eot?#iefix') format('embedded-opentype'),
+        url('Mukta-Light.woff2') format('woff2'),
+        url('Mukta-Light.woff') format('woff'),
+        url('Mukta-Light.ttf') format('truetype'),
+        url('Mukta-Light.svg#Mukta-Light') format('svg');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Mukta';
+    src: url('Mukta-Medium.eot');
+    src: url('Mukta-Medium.eot?#iefix') format('embedded-opentype'),
+        url('Mukta-Medium.woff2') format('woff2'),
+        url('Mukta-Medium.woff') format('woff'),
+        url('Mukta-Medium.ttf') format('truetype'),
+        url('Mukta-Medium.svg#Mukta-Medium') format('svg');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Mukta';
+    src: url('Mukta-Regular.eot');
+    src: url('Mukta-Regular.eot?#iefix') format('embedded-opentype'),
+        url('Mukta-Regular.woff2') format('woff2'),
+        url('Mukta-Regular.woff') format('woff'),
+        url('Mukta-Regular.ttf') format('truetype'),
+        url('Mukta-Regular.svg#Mukta-Regular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Mukta';
+    src: url('Mukta-SemiBold.eot');
+    src: url('Mukta-SemiBold.eot?#iefix') format('embedded-opentype'),
+        url('Mukta-SemiBold.woff2') format('woff2'),
+        url('Mukta-SemiBold.woff') format('woff'),
+        url('Mukta-SemiBold.ttf') format('truetype'),
+        url('Mukta-SemiBold.svg#Mukta-SemiBold') format('svg');
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+}
+

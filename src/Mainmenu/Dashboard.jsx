@@ -136,7 +136,7 @@ const Dashboard = () => {
 
   return (
     <div>
-    <Title style={{fontFamily: "Barlow",fontWeight:600,fontStyle:'normal'}}> Dashboard </Title>
+    <Title style={{fontWeight:600,fontStyle:'normal'}}> Dashboard </Title>
       <Row gutter={20} style={{marginTop:'35px'}} >
         <Col span={18}>
           <Row gutter={[16,24]} >
