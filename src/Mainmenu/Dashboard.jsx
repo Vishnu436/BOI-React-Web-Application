@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { EditOutlined } from "@ant-design/icons";
 import API from "../utilities/api";
 
+
 const Dashboard = () => {
   const { Title } = Typography;
   const [data, setData] = useState([]);
@@ -85,31 +86,28 @@ const Dashboard = () => {
   const columns = [
     
     {
-      title: 'Date',
+      title: 'Date and Time',
       dataIndex: 'Customer_Apllication_Date',
-      key: 'Customer_Apllication_Date'
+      key: 'Customer_Apllication_Date',
+      width: '20%',
     }, 
     
     {
       title: 'Application id',
       dataIndex: "Cus_Appli_Id",
       key: "Cus_Appli_Id",
+      width:'40%',
+      
     },
     {
       title: 'Account type',
       key: "Customer_Account_Type",
-      dataIndex:"Customer_Account_Type",
-      
-    },
-    {
-      title: 'Action',
-      key: 'action',
       render: (_, record) => (
         <Space size="middle">
-          <Button onClick={(index) => handleEdit(record)}> <EditOutlined />
-           </Button>
+          <p type={Status(record.Customer_Account_Type)}> {record.Customer_Account_Type === 1? <p> Savings Account </p> : <p> Current Account</p>}</p>
         </Space>
       ),
+      width :'15%'
     },
     {
       title: 'Status',
@@ -120,6 +118,18 @@ const Dashboard = () => {
         </Space>
       ),
       key: "Appli_Status",
+      width:"15%",
+    },
+    {
+      title: 'Action',
+      key: 'action',
+      render: (_, record) => (
+        <Space size="middle">
+          <Button onClick={(index) => handleEdit(record)}> <EditOutlined />
+           </Button>
+        </Space>
+      ),
+      width:'10%'
     },
     
   ];
@@ -131,22 +141,22 @@ const Dashboard = () => {
         <Col span={18}>
           <Row gutter={[16,24]} >
             <Col span={8}>
-              <Card className="cards" bordered={false} >
+              <Card style={{backgroundColor:'#00e600'}} className="cards" bordered={false} >
                 <Title level={2} className="cardinfo"> Approved : {cardData?.Approved ? cardData?.Approved : 0}  </Title>
               </Card>
             </Col>
             <Col span={8}>
-              <Card className="cards"  bordered={false}>
+              <Card style={{backgroundColor:'#ffd4d4'}} className="cards"  bordered={false}>
                 <Title level={2} className="cardinfo">  Rejected : {cardData?.Rejected ? cardData?.Rejected : 0} </Title>
               </Card>
             </Col>
             <Col span={8}>
-              <Card className="cards"  bordered={false}>
+              <Card style={{backgroundColor:'#EEE872'}} className="cards"  bordered={false}>
                 <Title level={2} className="cardinfo"> Pending: {cardData?.Pending ? cardData?.Pending : 0} </Title>       
               </Card>
             </Col>
             <Col span={24} style={{padding:'20px'}}>
-            <Table scroll={{ y: 275}} columns={columns} dataSource={data || []} />
+            <Table scroll={{y: 275}} columns={columns} dataSource={data || []} />
             </Col>
           </Row>
         </Col>

@@ -31,6 +31,7 @@ const Application = () => {
   const [form] = Form.useForm();
   const { state } = useLocation();
   const [isLoading, setLoading] = useState(true);
+  // const [data, setData] = useState({});
   const [approve, setapprove] = useState(false);
   const [reject, setreject] = useState(false);
   const [submittable, setSubmittable] = useState(false);
@@ -39,6 +40,12 @@ const Application = () => {
   const navigate = useNavigate();
   const [initialValues, setinitialValues] = useState({});
 
+
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     
+  //   }, 300);
+  // }, []);
 
   useEffect(() => {
     fetchData();
@@ -191,7 +198,7 @@ const Application = () => {
       rules: [
         {
           required: true,
-          message: "Please input your Full Name!",
+          message: "Full Name not Entered!",
         }
       ],
       placeholder: "Enter Your Full Name",
@@ -204,16 +211,16 @@ const Application = () => {
       rules: [
         {
           required: true,
-          message: "Please choose your Gender!",
+          message: "Gender has not choosed!",
         },
       ],
       placeholder: "Choose your Gender",
       disabled: true,
       type: "dropdown",
       options: [
-        { label: "Male", value: "Male" },
-        { label: "Female", value: "Female" },
-        { label: "Others", value: "Others" },
+        { label: "Male", value: "0" },
+        { label: "Female", value: "1" },
+        { label: "Others", value: "2" },
       ],
     },
     {
@@ -229,9 +236,10 @@ const Application = () => {
       disabled: true,
       type: "dropdown",
       options: [
-        { label: "Single", value: "Single" },
-        { label: "Married", value: "Married" },
-        { label: "Divorced", value: "Divorced" },
+        {label: 'Select a value', value: 'NA'},
+        { label: "Single", value: "0" },
+        { label: "Married", value: "1" },
+        { label: "Divorced", value: "2" },
       ],
     },
     {
@@ -240,16 +248,18 @@ const Application = () => {
       rules: [
         {
           required: true,
-          message: "Please input your Country name!",
-        },
-        {
-        
-          message: "Only alphabets were allowed in Country name",
+          message: "Invaid Country!",
         },
       ],
-      placeholder: "Enter Your Country",
+      
       disabled: true,
-      type: "text",
+      type: "dropdown",
+      options: [
+        {label: 'Select a value', value: 'NA'},
+        { label: "India", value: "0" },
+        { label: "Vietnam", value: "1" },
+        { label: "Others", value: "2" },
+      ],
     },
     {
       label: "Residential Address",
@@ -309,12 +319,18 @@ const Application = () => {
       rules: [
         {
           required: true,
-          message: "Please input your State!",
+          message: "Invaid State!",
         },
       ],
-      placeholder: "Enter Your State",
+      
       disabled: true,
-      type: "text",
+      type: "dropdown",
+      options: [
+        {label: 'Select a value', value: 'NA'},
+        { label: "Andhra Pradesh", value: "0" },
+        { label: "Telangana", value: "1" },
+        { label: "Others", value: "2" },
+      ],
     },
     {
       label: "Occupation",
@@ -345,7 +361,20 @@ const Application = () => {
       disabled: true,
       type: "text",
     },
-    
+    // {
+    //   label: "Preferred Language",
+    //   name: "Cus_Preferred_Language",
+    //   rules: [
+    //     {
+    //       required: true,
+    //       message: "Please Enter Your Language!",
+    //     },
+    //   ],
+    //   placeholder: "Enter Your Language",
+    //   disabled: true,
+    //   type: "text",
+    // },
+
     {
       label: "Date of Birth",
       name: "DOB",
@@ -378,19 +407,36 @@ const Application = () => {
       type: "heading",
     },
     {
-      label: "Account type",
+      label: "Account Type",
       name: "Cust_Account_Type",
       rules: [
         {
           required: true,
-          message: "Select Your Account type!",
+          message: "Invalid Account Type!",
         },
       ],
-      placeholder: "Select Your Account type",
+      
       disabled: true,
-      type: "text",
+      type: "dropdown",
+      options: [
+        {label: 'Select a value', value: 'NA'},
+        { label: "Savings Account", value: "0" },
+        { label: "Current Account", value: "1" },
+      ],
     },
-
+    // {
+    //   label: "Initial Deposit Amount",
+    //   name: "Cust_Initial_Deposit_Amount",
+    //   rules: [
+    //     {
+    //       required: true,
+    //       message: "Enter your deposit Amount!",
+    //     },
+    //   ],
+    //   placeholder: "Enter your deposit Amount",
+    //   disabled: true,
+    //   type: "text",
+    // },
     {
       label: "Nominee Details",
       name: "Cust_Nominee_Details",
@@ -454,12 +500,17 @@ const Application = () => {
       rules: [
         {
           required: true,
-          message: "Enter your Employment Status!",
+          message: "Invalid Employ Status!",
         },
       ],
-      placeholder: "Enter your Employment Status",
+      
       disabled: true,
-      type: "text",
+      type: "dropdown",
+      options: [
+        {label: 'Select a value', value: 'NA'},
+        {label: 'Active', value: '0'},
+        {label: 'Inactive', value: '1'},
+      ],
     },
     {
       label: "Source of Funds or Income",
@@ -511,12 +562,17 @@ const Application = () => {
       rules: [
         {
           required: true,
-          message: "Enter your ID Type!",
+          message: "Invalid Employ Status!",
         },
       ],
-      placeholder: "Enter your ID Type",
       disabled: true,
-      type: "text",
+      type: "dropdown",
+      options: [
+        {label: 'Select a value', value: 'NA'},
+        {label: 'Passport', value: '0'},
+        {label: 'Drivers License', value: '1'},
+        {label: 'Social Security Number', value: '2'},
+      ],
     },
 
     {
@@ -538,6 +594,8 @@ const Application = () => {
       type: "heading",
     },
   ];
+
+  console.log('data:image/jpeg;base64,' + initialValues.Cus_Address_Proof.slice(9,))
 
   return (
     <>
@@ -563,6 +621,7 @@ const Application = () => {
                   label={item.label}
                   name={item.name}
                   rules={item.rules}
+
                 >
                   <Input
                     placeholder={item.placeholder}
@@ -614,7 +673,7 @@ const Application = () => {
             >
               {initialValues.Cus_Address_Proof && (
                 <Image
-                  width={200}
+                  width={100}
                   src={`${'data:image/jpeg;base64,' + initialValues.Cus_Address_Proof.slice(9,)}`}
                   preview={{
                     toolbarRender: (
@@ -659,7 +718,7 @@ const Application = () => {
             >
               {initialValues.Cus_Id_Proof && (
                 <Image
-                  width={200}
+                  width={100}
                   src={`${'data:image/jpeg;base64,' + initialValues.Cus_Id_Proof.slice(9,)}`}
                   preview={{
                     toolbarRender: (
@@ -749,7 +808,7 @@ const Application = () => {
             >
               {initialValues.Cus_Signature && (
                 <Image
-                  width={200}
+                  width={100}
                   src={`${'data:image/jpeg;base64,' + initialValues.Cus_Signature.slice(9,)}`}
                   preview={{
                     toolbarRender: (
@@ -839,8 +898,7 @@ const Application = () => {
                       onCancel={() => setreject(false)}
                     >
                       <p>
-                        {" "}
-                        Form is rejected, Please check the details and submit again{" "}
+                        Form is Rejected, Please go to dashboard.
                       </p>
                     </Modal>
 
