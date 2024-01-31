@@ -615,7 +615,7 @@ const Application = () => {
               {initialValues.Cus_Address_Proof && (
                 <Image
                   width={200}
-                  src={`${initialValues.Cus_Address_Proof}`}
+                  src={`${'data:image/jpeg;base64,' + initialValues.Cus_Address_Proof.slice(9,)}`}
                   preview={{
                     toolbarRender: (
                       _,
@@ -660,7 +660,7 @@ const Application = () => {
               {initialValues.Cus_Id_Proof && (
                 <Image
                   width={200}
-                  src={`${initialValues.Cus_Id_Proof}`}
+                  src={`${'data:image/jpeg;base64,' + initialValues.Cus_Id_Proof.slice(9,)}`}
                   preview={{
                     toolbarRender: (
                       _,
@@ -750,7 +750,7 @@ const Application = () => {
               {initialValues.Cus_Signature && (
                 <Image
                   width={200}
-                  src={`${initialValues.Cus_Signature}`}
+                  src={`${'data:image/jpeg;base64,' + initialValues.Cus_Signature.slice(9,)}`}
                   preview={{
                     toolbarRender: (
                       _,
